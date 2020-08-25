@@ -1,10 +1,6 @@
-// function BoxOffice () {
-//   this.tickets = [];
-// }
-// BoxOffice.prototype.addTicket = function (ticket) {
-//   this.tickets.push(ticket)
-// }
-
+function BoxOffice () {
+  this.tickets = [];
+}
 
 //Business Logic for Ticket------
 function Ticket(Time, Age, movieAge) {
@@ -20,6 +16,7 @@ Ticket.prototype.discount = function() {
     return false;
   };
 }
+
   
 Ticket.prototype.isNew = function () {
     if (this.movieAge <= 2) {
@@ -56,11 +53,27 @@ Ticket.prototype.price = function () {
 }
 
 
-Ticket.prototype.ticketOutput = function() {
-  return this.time + this.age + this.nameOfMovie + this.Price;
-}
+function attachEventListeners () {
+  $(".btn-primary").click(function(){
+    $("#output").hide().fadeIn();
+  });
+};  
 
-//get inputs
-//pass inputs into ticket
-//pass inputs through the price function
+
+//UI Logic ---------
+$(document).ready(function(){
+  attachEventListeners();
+  $("#Tickets").submit(function(event){
+    event.preventDefault();
+    let Age = $("input#ageInput").val();
+    let Time = $("input#timeInput").val();
+    let movieAge = $("input#movieInput").val();
+    let finalTicket = new Ticket(Time, Age, movieAge);
+    let finalPrice = finalTicket.price();
+    $("input#ageInput").val("");
+    $("input#timeInput").val("");
+    $("input#movieInput").val("");
+    $("#output").fadeIn().text("Your total movie price is: $" + finalPrice + ".00");
+    });
+});
 
